@@ -1,0 +1,1 @@
+URL: https://open.kattis.com
