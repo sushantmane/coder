@@ -2,7 +2,7 @@ package cpc.oj.leetcode;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class P191_NumberOf1BitsTest {
 
