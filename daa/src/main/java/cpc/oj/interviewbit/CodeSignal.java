@@ -1,8 +1,13 @@
 package cpc.oj.interviewbit;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -119,14 +124,180 @@ public class CodeSignal {
         return res;
     }
 
-    public static void main(String[] args) {
-//        String[] crypt = {"SEND", "MORE", "MONEY"};
-        String[] crypt = {"TEN", "TWO", "ONE"};
-        char[][] solution = {{'O','1'},
-                {'T','0'},
-                {'W','9'},
-                {'E','5'},
-                {'N','4'}};
-        System.out.println(isCryptSolution(crypt, solution));
+    static int[][] rotateMatrix(int[][] arr, int k) {
+        while (k != 0) {
+            arr = rotateMatrix(arr);
+            k--;
+        }
+        return arr;
+    }
+
+    static int[][] rotateMatrix(int[][] arr) {
+        int m = arr.length;
+        int[][] res = new int[m][m];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == j || i + j == m - 1) {
+                    res[i][j] = arr[i][j];
+                } else {
+                    //res[j][m - 1 - i] = arr[i][j];
+                    res[i][j] = arr[m - 1 - j][i];
+                }
+            }
+        }
+        return res;
+    }
+
+    static int evenDigitNumbers(int[] arr) {
+        int count = 0;
+        for (int x : arr) {
+            if (String.valueOf(x).length() % 2 == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    static int getFact(int n) {
+        int fact = 1;
+        for (int i = 2; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+
+    static int ncr(int n, int r) {
+        return getFact(n) / (getFact(r) * getFact(n - r));
+    }
+
+    static int digitAnagrams(int[] a) {
+        Map<String, Integer> map = new HashMap<>();
+        for (int i : a) {
+            String s = String.valueOf(i);
+            char[] ca = s.toCharArray();
+            Arrays.sort(ca);
+            map.compute(String.valueOf(ca), (k, v) -> v == null ? 1 : v + 1);
+        }
+        int count = 0;
+        for (String k : map.keySet()) {
+            if (map.get(k) > 1) {
+                count += ncr(map.get(k), 2);
+            }
+        }
+        return count;
+    }
+
+    static int[] mostFrequentDigits(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i : arr) {
+            while (i > 0) {
+                map.compute(i % 10, (k, v) -> v == null ? 1 : v + 1);
+                i = i / 10;
+            }
+        }
+        return new int[0];
+    }
+
+    static int[][] borderSort(int[][] mat) {
+        int n = mat.length;
+        int k = 0;
+        int layer = 0;
+        int i = 0;
+        int j = 0;
+        List<Integer> flat = new ArrayList<>();
+        while (k < n * n) {
+            i = layer;
+            j = layer;
+            List<Integer> layerArr = new ArrayList<>();
+            while (j < n - layer) {
+                layerArr.add(mat[i][j]);
+                k++;
+                j++;
+            }
+            j--;
+            i++;
+            while (i < n - layer) {
+                layerArr.add(mat[i][j]);
+                k++;
+                i++;
+            }
+            i--;
+            j--;
+            while (j >= layer) {
+                layerArr.add(mat[i][j]);
+                k++;
+                j--;
+            }
+            i--;
+            j++;
+            while (i > layer) {
+                layerArr.add(mat[i][j]);
+                k++;
+                i--;
+            }
+            layer++;
+            Collections.sort(layerArr);
+            flat.addAll(layerArr);
+        }
+
+        k = 0;
+        layer = 0;
+        while (k < n * n) {
+            i = layer;
+            j = layer;
+            while (j < n - layer) {
+                mat[i][j] = flat.get(k);
+                k++;
+                j++;
+            }
+            j--;
+            i++;
+            while (i < n - layer) {
+                mat[i][j] = flat.get(k);
+                k++;
+                i++;
+            }
+            i--;
+            j--;
+            while (j >= layer) {
+                mat[i][j] = flat.get(k);
+                k++;
+                j--;
+            }
+            i--;
+            j++;
+            while (i > layer) {
+                mat[i][j] = flat.get(k);
+                k++;
+                i--;
+            }
+            layer++;
+        }
+        return mat;
+    }
+
+    private void testRotateMatrixNTimes() {
+        int[][] arr = {
+                {1, 2, 3, 4},
+                {6, 7, 8, 9},
+                {11, 12, 13, 14},
+                {16, 17, 18, 19},
+        };
+
+        for (int[] a : arr) {
+            for (int i : a) {
+                System.out.print(i + "\t");
+            }
+            System.out.println();
+        }
+
+        System.out.println("--");
+        int[][] res = rotateMatrix(arr, 3);
+        for (int[] a : res) {
+            for (int i : a) {
+                System.out.print(i + "\t");
+            }
+            System.out.println();
+        }
     }
 }
