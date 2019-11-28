@@ -300,4 +300,117 @@ public class CodeSignal {
             System.out.println();
         }
     }
+
+    public static int bestSquares(int[][] m, int k) {
+        if (m.length == 0) {
+            return 0;
+        }
+
+        List<List<Integer>> lists = new ArrayList<>();
+
+        int c = m[0].length;
+        int r = m.length;
+        for (int i = 0; i <= (r - k); i++) {
+            for (int j = 0; j <= (c - k); j++) {
+//                System.out.println("i:" + i + " j:" + j);
+                List<Integer> lt = new ArrayList<>();
+                for (int x = 0; x < k; x++) {
+                    for (int y = 0; y < k; y++) {
+                        lt.add(m[i + x][j + y]);
+//                        System.out.println(m[i + x][j + y]+ " ");
+                    }
+//                    System.out.println();
+                }
+                lists.add(lt);
+            }
+        }
+
+        System.out.println(lists);
+
+        int sum = 0;
+        List<Integer> sums = new ArrayList<>();
+        for (List<Integer> lt : lists) {
+            sum = 0;
+            for (int i : lt) {
+                sum += i;
+            }
+            sums.add(sum);
+        }
+        List<Integer> sumsCopy = new ArrayList<>(sums);
+
+        Collections.sort(sums);
+        System.out.println(sums);
+        int max = sums.get(sums.size() - 1);
+        System.out.println(max);
+        System.out.println(sumsCopy);
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < sumsCopy.size(); i++) {
+            if (sumsCopy.get(i) == max) {
+                set.addAll(lists.get(i));
+            }
+        }
+
+        sum = 0;
+        for (int i : set) {
+            sum += i;
+        }
+        System.out.println(sum);
+        System.out.println(set);
+        return 0;
+    }
+
+    public static void main(String[] args) {
+//        int k = 2;
+//        int[][] m = {{1, 0, 1, 5, 6},
+//                {3, 3, 0, 3, 3},
+//                {2, 9, 2, 1, 2},
+//                {0, 2, 4, 2, 0}};
+//        System.out.println(bestSquares(m, k));
+
+        String s = "ab12c";
+        String t = "1zz456";
+
+        System.out.println(removeOneDigit(s, t));
+    }
+
+    public static int removeOneDigit(String s, String t) {
+        int ways = 0;
+        char[] sChars = s.toCharArray();
+        char[] tChars = t.toCharArray();
+        for (int i = 0; i < s.length(); i++) {
+            String sCmp = "";
+            if (Character.isDigit(sChars[i])) {
+                for (int k = 0; k < s.length(); k++) {
+                    if (k == i) {
+                        continue;
+                    }
+                    System.out.println("*** " + sCmp);
+                    sCmp = sCmp + sChars[k];
+                }
+                if (sCmp.compareTo(t) < 0) {
+                    System.out.println(sCmp + " :: " + t);
+                    ways++;
+                }
+            }
+        }
+
+        for (int i = 0; i < t.length(); i++) {
+            String tCmp = "";
+            if (Character.isDigit(tChars[i])) {
+                for (int k = 0; k < t.length(); k++) {
+                    if (k == i) {
+                        continue;
+                    }
+                    tCmp += tChars[k];
+                }
+                if (s.compareTo(tCmp) < 0) {
+                    System.out.println(s + " " + tCmp);
+                    ways++;
+                }
+            }
+        }
+
+        return ways;
+    }
 }
