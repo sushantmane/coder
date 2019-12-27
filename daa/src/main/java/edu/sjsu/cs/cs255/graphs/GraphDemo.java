@@ -93,7 +93,6 @@ public class GraphDemo {
 
     public static void main(String[] args) {
         GraphDemo demo = new GraphDemo();
-        int nVertices = 2;
         int[][] edges = {{0, 1}, {0, 2}, {1, 2}, {1, 3}, {1, 4}, {3, 4},
                 {4, 5}, {2, 4}, {2, 6}, {2, 7}, {6, 7}};
         demo.initGraph(8, edges, false);
