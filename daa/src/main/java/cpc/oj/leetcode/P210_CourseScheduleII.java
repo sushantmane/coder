@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class P207_CourseSchedule {
+public class P210_CourseScheduleII {
 
     private CourseGraph graph;
 
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+    public int[] canFinish(int numCourses, int[][] prerequisites) {
         graph = new CourseGraph(numCourses, prerequisites);
         boolean[] explored = new boolean[graph.getV()];
         boolean[] processed = new boolean[graph.getV()];
@@ -18,11 +18,12 @@ public class P207_CourseSchedule {
                 continue;
             }
             if (dfs(i, explored, processed, tsort)) {
-                return false;
+                return new int[0];
             }
         }
         Collections.reverse(tsort);
-        return true;
+        int[] out = tsort.stream().mapToInt(Integer::intValue).toArray();
+        return out;
     }
 
     private boolean dfs(int u, boolean[] explored, boolean[] processed, List<Integer> tsort) {
@@ -42,5 +43,3 @@ public class P207_CourseSchedule {
         return false;
     }
 }
-
-

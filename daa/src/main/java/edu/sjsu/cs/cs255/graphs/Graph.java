@@ -9,12 +9,16 @@ import java.util.Set;
 public class Graph {
 
     private final Map<Integer, List<Integer>> adjList = new HashMap<>();
+    private final int nVertices;
+    private final boolean directed;
 
     public Graph(int nVertices, int[][] edges) {
         this(nVertices, edges, false);
     }
 
     public Graph(int nVertices, int[][] edges, boolean directed) {
+        this.nVertices = nVertices;
+        this.directed = directed;
         for (int i = 0; i < nVertices; i++) {
             adjList.put(i, new ArrayList<>());
         }
@@ -34,5 +38,22 @@ public class Graph {
 
     public Set<Integer> getVertices() {
         return adjList.keySet();
+    }
+
+    public boolean isDirected() {
+        return directed;
+    }
+
+    public int getNVertices() {
+        return nVertices;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (int u : adjList.keySet()) {
+            str = str + u + ": " + adjList.get(u) + "\n";
+        }
+        return str;
     }
 }
