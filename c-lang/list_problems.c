@@ -168,6 +168,21 @@ void insert_sort(node_t** head) {
         *head = result;
 }
 
+int get_kth_to_last(node_t* root, int k) {
+    node_t* leader = root;
+    node_t* follower = root;
+    while (leader != NULL && k > 0) {
+        leader = leader->next;
+        k--;
+    }
+    while (leader->next != NULL) {
+        leader = leader->next;
+        follower = follower->next;
+    }
+
+    return follower->data;
+}
+
 int main(int argc, char** argv) {
     node_t* root = NULL;
     int arr[] = {11, 12, 13, 14, 15, 11, 23, 11, 12, 11, 13};
@@ -175,4 +190,5 @@ int main(int argc, char** argv) {
         add_to_front(&root, arr[i]);
     }
     print(root);
+    printf("\n%d\n", get_kth_to_last(root, 2));
 }
