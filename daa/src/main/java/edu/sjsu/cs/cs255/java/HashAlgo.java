@@ -107,8 +107,7 @@ public class HashAlgo {
         String msg = "San Jose State University";
         digestAlgos = new HashSet<>();
 
-        digestAlgos.add("SHA-1");
-//        digestAlgos.add("SHA-");
+        digestAlgos.add("SHA");
         System.out.println(digestAlgos);
         for (String algo : digestAlgos) {
             MessageDigest di = MessageDigest.getInstance(algo);
